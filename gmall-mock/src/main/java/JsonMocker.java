@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Random;
 
 
-
+//模拟数据
     public class JsonMocker {
 
         int startupNum = 100000;
