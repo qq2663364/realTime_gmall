@@ -20,6 +20,7 @@
         <module>gmall-mock</module>
         <module>gmall-logger</module>
         <module>gmall-realtime</module>
+        <module>gmall-canal</module>
     </modules>
 
     <properties>

@@ -1,16 +1,15 @@
 package com.sc.gmall.publisher.controller;
-import java.util.ArrayList;
-import java.util.HashMap;
-import	java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import com.alibaba.fastjson.JSON;
 import com.sc.gmall.publisher.service.PublisherService;
+import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @Autor sc
@@ -45,11 +44,37 @@ public class PublisherController {
         return JSON.toJSONString(totalList);
 
     }
+    @GetMapping("realtime-hour" )
+    public String getHourTotal(@RequestParam String id,@RequestParam String date){
+        if("dau".equals(id)){
+        //今天的明细
+        Map dauHourTDMap = publisherService.getDauHourMap(date);
+        //昨天的明细
+        String yesterday = getYesterday(date);
+        Map dauHourYDMap = publisherService.getDauHourMap(yesterday);
+        HashMap hourMap = new HashMap();
+        hourMap.put("today",dauHourTDMap);
+        hourMap.put("yesterday",dauHourYDMap);
+        return JSON.toJSONString(hourMap);
+        }
 
-//    public static void main(String[] args) {
-//        PublisherServiceImpl publisherService = new PublisherServiceImpl();
-//        Integer dauTotal = publisherService.getDauTotal("2019-12-07");
-//        System.out.println(dauTotal);
-//    }
+        return null;
+
+    }
+
+    private String getYesterday (String today){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String yesterday = "";
+        try {
+            Date todayDate = simpleDateFormat.parse(today);
+            Date yesterdayDate = DateUtils.addDays(todayDate, -1);
+            yesterday = simpleDateFormat.format(yesterdayDate);
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return  yesterday;
+    }
+
 
 }
