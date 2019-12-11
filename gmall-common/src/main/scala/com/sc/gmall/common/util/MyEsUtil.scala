@@ -62,7 +62,7 @@ object MyEsUtil {
   //批量放入ES数据
   def indexBulk(indexName:String,list: List[Any])={
     val jest: JestClient = getClient
-    val bulkBuilder = new Bulk.Builder().defaultIndex("gmall_dau").defaultType("_doc")
+    val bulkBuilder = new Bulk.Builder().defaultIndex(indexName).defaultType("_doc")
     for(doc <- list){
       val index: Index = new Index.Builder(doc).build()
       bulkBuilder.addAction(index)

@@ -11,4 +11,8 @@ public interface PublisherService {
     public Integer getDauTotal (String date);
 
     public Map getDauHourMap(String date);
+
+    public Double getOrderAmount(String date);
+
+    public Map getOrderAmountHourMap(String date);
 }
